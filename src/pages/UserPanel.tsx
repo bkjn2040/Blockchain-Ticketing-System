@@ -4,9 +4,11 @@ import { Button } from '../components/ui/button';
 import PurchaseForm from '../components/PurchaseForm';
 import PurchaseList from '../components/PurchaseList';
 import { Purchase } from '../components/types';
+import QRCode from 'qrcode';
 
 export default function UserPanel() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
+  const [qrCodeSvg, setQrCodeSvg] = useState<string | null>(null); // State to store the QR code SVG
   const userDID = localStorage.getItem('userDID');
 
   useEffect(() => {
@@ -14,7 +16,43 @@ export default function UserPanel() {
     setPurchases(savedPurchases.filter((p: Purchase) => p.purchasedBy === userDID));
   }, []);
 
-  const handlePurchase = (newPurchase: Purchase) => {
+  // Function to generate DID in the browser using the Web Crypto API
+  const generateTicketDID = async (): Promise<{ did: string, qrCodeSvg: string }> => {
+    // Generate an Ed25519 key pair
+    const keyPair = await window.crypto.subtle.generateKey(
+      {
+        name: "ECDSA",
+        namedCurve: "P-384",  // Ed25519 is not directly supported in the browser WebCrypto API, but we use P-384 as an alternative
+      },
+      true,
+      ["sign", "verify"]
+    );
+
+    // Export the public key
+    const publicKey = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
+    const publicKeyHex = Array.from(new Uint8Array(publicKey))
+      .map((byte) => byte.toString(16).padStart(2, '0'))
+      .join('');
+
+    // Construct the DID using the public key hex
+    const did = `did:hedera:${publicKeyHex}`;
+
+    // Generate a QR code (SVG format) from the DID using the node-qrcode library.
+    const qrCodeSvg = await QRCode.toString(did, { type: 'svg' });
+
+    return { did, qrCodeSvg };
+  };
+
+  const handlePurchase = async (newPurchase: Purchase) => {
+    // Generate a new DID when a purchase is made
+    const { did, qrCodeSvg } = await generateTicketDID();
+
+    // Log the generated DID to the console
+    console.log("Generated DID for the ticket:", did);
+
+    // Update the state with the generated QR code SVG
+    setQrCodeSvg(qrCodeSvg);
+
     const newPurchases = [...purchases, newPurchase];
     setPurchases(newPurchases);
     localStorage.setItem('purchases', JSON.stringify(newPurchases));
@@ -139,7 +177,13 @@ export default function UserPanel() {
         </div>
       </div>
 
-      
+      {/* Render the QR Code if available */}
+      {qrCodeSvg && (
+        <div className="mt-4 p-4 border rounded-lg">
+          <h3 className="font-semibold text-xl">Your Ticket QR Code</h3>
+          <div dangerouslySetInnerHTML={{ __html: qrCodeSvg }} />
+        </div>
+      )}
     </div>
   );
 }
