@@ -9,12 +9,11 @@ export default function AdminPanel() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
 
   useEffect(() => {
-    const did = localStorage.getItem('userDID');
-    if (!did || !verifyDID(did)) {
-      alert('请先登录管理员账号');
+    if (localStorage.getItem('adminAuthenticated') !== 'true') {
       window.location.href = '/';
+      alert('请先登录管理员账号');
     }
-
+  
     const savedPurchases = JSON.parse(localStorage.getItem('purchases') || '[]');
     setPurchases(savedPurchases);
   }, []);
