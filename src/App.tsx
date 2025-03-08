@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <nav className="flex justify-center items-center p-4 border-b w-full">
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-full max-w-screen-2xl">
           <Link to="/">
             <Button variant="ghost" className="w-64 text-center">Home</Button>
           </Link>
