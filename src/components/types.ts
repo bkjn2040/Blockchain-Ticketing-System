@@ -1,8 +1,9 @@
-export interface Ticket {
-    id: string;
-    title: string;
-    description: string;
-    status: string;
-    createdBy: string;
-    createdAt: string;
-  }
+export interface Purchase {
+  id: string;
+  eventName: string;
+  quantity: number;
+  price: number;
+  purchaseDate: string;
+  purchasedBy: string;  // user DID
+  status: 'pending' | 'confirmed' | 'cancelled';
+}

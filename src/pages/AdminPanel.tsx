@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { verifyDID } from '../hedera/auth';
-import TicketList from '../components/TicketList';
+import PurchaseList from '../components/PurchaseList';
 import { Card, CardHeader, CardTitle } from '../components/ui/card';
-import { Ticket } from '../components/types';
+import { Purchase } from '../components/types';
 
 export default function AdminPanel() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [purchases, setPurchases] = useState<Purchase[]>([]);
 
   useEffect(() => {
     const did = localStorage.getItem('userDID');
@@ -14,23 +14,29 @@ export default function AdminPanel() {
       window.location.href = '/';
     }
 
-    const savedTickets = JSON.parse(localStorage.getItem('tickets') || '[]');
-    setTickets(savedTickets);
+    const savedPurchases = JSON.parse(localStorage.getItem('purchases') || '[]');
+    setPurchases(savedPurchases);
   }, []);
 
-  const updateTicketStatus = (id: string, status: string) => {
-    const updated = tickets.map((t) => (t.id === id ? { ...t, status } : t));
-    setTickets(updated);
-    localStorage.setItem('tickets', JSON.stringify(updated));
+  const updatePurchaseStatus = (id: string, status: 'confirmed' | 'cancelled') => {
+    const updated = purchases.map(p => 
+      p.id === id ? { ...p, status } : p
+    );
+    setPurchases(updated);
+    localStorage.setItem('purchases', JSON.stringify(updated));
   };
 
   return (
     <div className="p-6">
       <Card>
         <CardHeader>
-          <CardTitle>Management Panel</CardTitle>
+          <CardTitle>Purchase Management</CardTitle>
         </CardHeader>
-        <TicketList tickets={tickets} onStatusChange={updateTicketStatus} isAdmin={true} />
+        <PurchaseList 
+          purchases={purchases} 
+          onStatusChange={updatePurchaseStatus} 
+          isAdmin={true} 
+        />
       </Card>
     </div>
   );

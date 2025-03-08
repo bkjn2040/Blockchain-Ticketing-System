@@ -212,3 +212,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.sticky {
+  position: sticky;
+  position: -webkit-sticky;
+}

@@ -18,7 +18,7 @@ function App() {
             <Button variant="ghost">Admin Panel</Button>
           </Link>
           <Link to="/user">
-            <Button variant="ghost">User Panel</Button>
+            <Button variant="ghost">My Purchases</Button>
           </Link>
         </div>
         {/* <DIDManager /> */}
