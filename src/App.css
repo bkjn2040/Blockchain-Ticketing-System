@@ -40,3 +40,48 @@
 .read-the-docs {
   color: #888;
 }
+
+/* 补充样式 */
+.global-nav {
+  padding: 1rem;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.nav-button {
+  padding: 1rem 2rem;
+  background: #646cff;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+}
+
+.ticket-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.ticket {
+  padding: 1rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+.ticket.resolved {
+  opacity: 0.6;
+  background: #333;
+}
