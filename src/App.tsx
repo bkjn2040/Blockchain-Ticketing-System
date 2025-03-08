@@ -9,16 +9,16 @@ import DIDManager from './components/DIDManager';
 function App() {
   return (
     <Router>
-      <nav className="flex justify-between items-center p-4 border-b">
+      <nav className="flex justify-center items-center p-4 border-b w-full">
         <div className="flex gap-4">
           <Link to="/">
-            <Button variant="ghost">Home</Button>
+            <Button variant="ghost" className="w-64 text-center">Home</Button>
           </Link>
           <Link to="/admin">
-            <Button variant="ghost">Admin Panel</Button>
+            <Button variant="ghost" className="w-32 text-center">Admin Panel</Button>
           </Link>
           <Link to="/user">
-            <Button variant="ghost">My Purchases</Button>
+            <Button variant="ghost" className="w-32 text-center">My Purchases</Button>
           </Link>
         </div>
         {/* <DIDManager /> */}
