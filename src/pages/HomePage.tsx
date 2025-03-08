@@ -2,7 +2,7 @@ import { Button } from '../components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/card';
 import { Link } from 'react-router-dom';
 import React, { useState } from "react";
-import { authenticateAdmin } from "../hedera/did";
+import { authenticateAdmin } from "../hedera/adminAuth";
 import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
@@ -40,6 +40,11 @@ export default function HomePage() {
               User Panel
             </Button>
           </Link>
+          <input
+            type="password"
+            id="privateKeyInput"
+            placeholder="Enter your private key"
+          />
         </CardContent>
         <CardFooter className="flex gap-4">
           <Button 

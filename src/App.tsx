@@ -4,7 +4,6 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import AdminPanel from './pages/AdminPanel';
 import UserPanel from './pages/UserPanel';
-import DIDManager from './components/DIDManager';
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
             <Button variant="ghost" className="w-32 text-center">My Purchases</Button>
           </Link>
         </div>
-        {/* <DIDManager /> */}
       </nav>
 
       <Routes>
