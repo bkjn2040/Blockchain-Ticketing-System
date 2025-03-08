@@ -17,10 +17,10 @@ export default function DIDManager() {
     }
   };
 
-  return (
-    <div>
-      <button onClick={handleCreateDID}>创建 DID</button>
-      {did && <p>DID: {did}</p>} {/* 仅显示 DID */}
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <button onClick={handleCreateDID}>Create DID</button>
+  //     {did && <p>DID: {did}</p>} {/* 仅显示 DID */}
+  //   </div>
+  // );
 }

@@ -1,34 +1,43 @@
-// components/TicketList.tsx
 import { Ticket } from './types';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 export default function TicketList({ tickets, onDelete, onStatusChange, isAdmin }: any) {
   return (
-    <div className="ticket-list">
+    <CardContent className="space-y-4">
       {tickets.map((ticket: Ticket) => (
-        <div key={ticket.id} className={`ticket ${ticket.status.toLowerCase()}`}>
-          <h3>{ticket.title}</h3>
-          <p>{ticket.description}</p>
-          <div className="meta">
-            <span>Status: {ticket.status}</span>
-            <span>Created: {new Date(ticket.createdAt).toLocaleDateString()}</span>
-          </div>
-          
+        <Card key={ticket.id}>
+          <CardHeader>
+            <CardTitle>{ticket.title}</CardTitle>
+            <p>{ticket.description}</p>
+            <div className="flex items-center justify-between">
+              <span>Status: {ticket.status}</span>
+              <span>Created: {new Date(ticket.createdAt).toLocaleDateString()}</span>
+            </div>
+          </CardHeader>
           {isAdmin && (
-            <select 
+            <Select
               value={ticket.status}
-              onChange={(e) => onStatusChange(ticket.id, e.target.value)}
+              onValueChange={(value) => onStatusChange(ticket.id, value)}
             >
-              <option>Open</option>
-              <option>In Progress</option>
-              <option>Resolved</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Open">Open</SelectItem>
+                <SelectItem value="In Progress">In Progress</SelectItem>
+                <SelectItem value="Resolved">Resolved</SelectItem>
+              </SelectContent>
+            </Select>
           )}
-          
           {!isAdmin && (
-            <button onClick={() => onDelete(ticket.id)}>Delete</button>
+            <Button variant="destructive" onClick={() => onDelete(ticket.id)}>
+              Delete
+            </Button>
           )}
-        </div>
+        </Card>
       ))}
-    </div>
+    </CardContent>
   );
 }

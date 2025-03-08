@@ -1,7 +1,7 @@
-// pages/UserPanel.tsx
 import { useState, useEffect } from 'react';
 import TicketForm from '../components/TicketForm';
 import TicketList from '../components/TicketList';
+import { Card, CardHeader, CardTitle } from '../components/ui/card';
 import { Ticket } from '../components/types';
 
 export default function UserPanel() {
@@ -20,13 +20,14 @@ export default function UserPanel() {
   };
 
   return (
-    <div className="panel">
-      <h2>User Panel</h2>
-      <TicketForm onSubmit={handleSubmit} />
-      <TicketList 
-        tickets={tickets}
-        onDelete={(id: string) => setTickets(tickets.filter(t => t.id !== id))}
-      />
+    <div className="p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>User Panel</CardTitle>
+        </CardHeader>
+        <TicketForm onSubmit={handleSubmit} />
+        <TicketList tickets={tickets} onDelete={(id: string) => setTickets(tickets.filter((t) => t.id !== id))} />
+      </Card>
     </div>
   );
 }

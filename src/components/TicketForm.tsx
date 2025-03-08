@@ -1,5 +1,7 @@
-// components/TicketForm.tsx
 import { useState } from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { Ticket } from './types';
 
 export default function TicketForm({ onSubmit }: { onSubmit: (ticket: Ticket) => void }) {
@@ -14,28 +16,38 @@ export default function TicketForm({ onSubmit }: { onSubmit: (ticket: Ticket) =>
       description,
       status: 'Open',
       createdBy: localStorage.getItem('userDID')!,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     });
     setTitle('');
     setDescription('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="ticket-form">
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-      <button type="submit">Submit Ticket</button>
+    <form onSubmit={handleSubmit} className="space-y-4 p-4">
+      <div>
+        <Label htmlFor="title">Title</Label>
+        <Input
+          id="title"
+          type="text"
+          placeholder="Enter title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Input
+          id="description"
+          placeholder="Enter description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+      </div>
+      <Button type="submit" className="w-full">
+        Submit Ticket
+      </Button>
     </form>
   );
 }
