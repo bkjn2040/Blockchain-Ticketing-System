@@ -1,32 +1,26 @@
 import { useState } from 'react';
 import { generateDID } from '../hedera/did';
 
+// 移除未使用的状态变量
 export default function DIDManager() {
   const [did, setDid] = useState<string>("");
-  const [privateKey, setPrivateKey] = useState<string>("");
 
   const handleCreateDID = async () => {
     try {
       const { did: newDID, privateKey: newKey } = await generateDID();
       setDid(newDID);
-      setPrivateKey(newKey);
-      // safe storage ( example with localStorage, need encryption otherwise )
       localStorage.setItem("userDID", newDID);
-      localStorage.setItem("userPrivateKey", newKey);
+      localStorage.setItem("userPrivateKey", newKey); // 直接保存，无需显示私钥
     } catch (error) {
-      alert("DID creation failed: " + error.message);
+      const message = error instanceof Error ? error.message : "未知错误";
+      alert("DID 创建失败: " + message);
     }
   };
 
   return (
     <div>
       <button onClick={handleCreateDID}>创建 DID</button>
-      {did && (
-        <div>
-          <p>DID: {did}</p>
-          <p>Private Key: *****（安全隐藏）</p>
-        </div>
-      )}
+      {did && <p>DID: {did}</p>} {/* 仅显示 DID */}
     </div>
   );
 }
