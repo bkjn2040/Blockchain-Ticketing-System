@@ -9,16 +9,23 @@ import VerifyTicket from './pages/VerifyTicket';
 function App() {
   return (
     <Router>
-      <nav className="flex justify-center items-center p-4 border-b w-full">
-        <div className="flex gap-4 w-full max-w-screen-2xl">
+      <nav className="flex justify-center items-center p-4 border-b w-full bg-white/90 backdrop-blur-sm shadow-sm">
+        <div className="flex gap-2 w-full max-w-screen-2xl">
           <Link to="/">
-            <Button variant="ghost" className="w-64 text-center">Home</Button>
+            <Button 
+              variant="ghost" 
+              className="w-32 text-center rounded-lg hover:bg-gray-100 transition-all duration-200 text-gray-600 hover:text-gray-900"
+            >
+              🏠 Home
+            </Button>
           </Link>
-          {/* <Link to="/admin">
-            <Button variant="ghost" className="w-32 text-center">Admin Panel</Button>
-          </Link> */}
           <Link to="/user">
-            <Button variant="ghost" className="w-32 text-center">My Purchases</Button>
+            <Button 
+              variant="ghost"
+              className="w-40 text-center rounded-lg hover:bg-gray-100 transition-all duration-200 text-gray-600 hover:text-gray-900"
+            >
+              🎫 My Tickets
+            </Button>
           </Link>
         </div>
       </nav>

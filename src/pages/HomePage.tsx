@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import React, { useState } from "react";
 import { authenticateAdmin } from "../hedera/adminAuth";
 import { useNavigate } from 'react-router-dom';
+import { Input } from '../components/ui/input';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -23,46 +24,46 @@ export default function HomePage() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">DID Ticketing System</CardTitle>
-          <CardDescription className="text-center">
-            Manage and submit tickets with decentralized identity verification
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {/* <Link to="/admin"> */}
-            <Button className="w-full" onClick={handleButtonClick}>Management Panel</Button>
-          {/* </Link> */}
-          <Link to="/user">
-            <Button className="w-full" variant="outline">
-              User Panel
-            </Button>
-          </Link>
-          <Link to="/scanner">
-            <Button className="w-full" variant="outline">
-              Scanner
-            </Button>
-          </Link>
-          <input
-            type="password"
-            id="privateKeyInput"
-            placeholder="Enter your private key"
-          />
-        </CardContent>
-        <CardFooter className="flex gap-4">
-          <Button 
-            variant="destructive" 
-            onClick={() => {
-              localStorage.removeItem('adminAuthenticated');
-              window.location.href = '/';
-            }}
-          >
-            Log out
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center p-4">
+  <Card className="w-full max-w-md mx-auto shadow-xl rounded-2xl border-0">
+    <CardHeader className="text-center space-y-2 pb-4">
+      <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl mb-4">
+        🔐
+      </div>
+      <CardTitle className="text-3xl font-bold text-gray-900">DID Ticketing</CardTitle>
+      <CardDescription className="text-gray-500">
+        Secure decentralized ticketing system
+      </CardDescription>
+    </CardHeader>
+    
+    <CardContent className="space-y-4">
+      <Button 
+        onClick={handleButtonClick}
+        className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all"
+      >
+        🔒 Management Panel
+      </Button>
+      
+      <div className="space-y-3">
+        <Link to="/user">
+          <Button variant="outline" className="w-full h-12 rounded-xl">
+            👤 User Dashboard
           </Button>
-        </CardFooter>
-      </Card>
-    </div>
+        </Link>
+        <Link to="/scanner">
+          <Button variant="outline" className="w-full h-12 rounded-xl">
+            📷 QR Scanner
+          </Button>
+        </Link>
+      </div>
+
+      {/* <Input
+        type="password"
+        placeholder="🔑 Enter private key"
+        className="rounded-xl h-12 focus-visible:ring-blue-200 border-gray-200"
+      /> */}
+    </CardContent>
+  </Card>
+</div>
   );
 }

@@ -3,6 +3,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import jsQR from 'jsqr';  // QR Code decoding library
 import { validateDIDOnHedera } from '../hedera/adminAuth';  // Import the validateDIDOnHedera function
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { UploadIcon } from 'lucide-react';
 
 export default function VerifyTicket() {
   const [qrCodeData, setQrCodeData] = useState<string | null>(null); // Store decoded DID
@@ -69,37 +71,59 @@ export default function VerifyTicket() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      {/* QR Code Scanner */}
-      <div className="mb-4">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleScanQRCode}
-          className="border p-2"
-        />
-        <p className="text-sm text-gray-500 mt-2">Upload an image containing a QR code</p>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+  <Card className="w-full max-w-lg shadow-xl rounded-2xl border-0">
+    <CardHeader className="text-center pb-4">
+      <div className="mx-auto w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-2xl mb-4">
+        📷
       </div>
+      <h1 className="text-2xl font-bold text-gray-900">Verify Ticket</h1>
+    </CardHeader>
 
-      {/* QR Code Data Display */}
-      {qrCodeData && (
-        <div>
-          <p className="text-xl font-medium mb-2">Decoded DID:</p>
-          <p className="text-lg font-semibold">{qrCodeData}</p>
-        </div>
-      )}
+    <CardContent className="space-y-6">
+      <div className="space-y-4">
+        <label className="block">
+          <span className="sr-only">Upload QR Code</span>
+          <div className="flex items-center justify-center w-full">
+            <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 transition-colors bg-white">
+              <UploadIcon className="w-8 h-8 text-gray-400 mb-2" />
+              <p className="text-gray-600">Click to upload QR image</p>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={handleScanQRCode}
+                className="hidden"
+              />
+            </label>
+          </div>
+        </label>
 
-      {/* Verify DID Button */}
-      <Button onClick={handleVerifyDID} className="mt-4">
-        Verify DID
-      </Button>
+        {qrCodeData && (
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <p className="text-sm font-medium text-gray-600">Scanned DID:</p>
+            <p className="font-mono text-blue-600 break-all">{qrCodeData}</p>
+          </div>
+        )}
 
-      {/* Display Verification Result */}
-      {scanResult && (
-        <div className="mt-4">
-          <p className="text-lg font-semibold">{scanResult}</p>
-        </div>
-      )}
-    </div>
+        <Button 
+          onClick={handleVerifyDID}
+          className="w-full h-12 rounded-xl bg-purple-600 hover:bg-purple-700 text-white transition-all"
+        >
+          Verify Authenticity
+        </Button>
+
+        {scanResult && (
+          <div className={`p-4 rounded-xl ${
+            scanResult.includes('successful') 
+              ? 'bg-green-50 text-green-700' 
+              : 'bg-red-50 text-red-700'
+          }`}>
+            {scanResult}
+          </div>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+</div>
   );
 }
