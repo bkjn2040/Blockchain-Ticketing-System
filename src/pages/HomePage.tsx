@@ -11,12 +11,12 @@ export default function HomePage() {
 
   const handleButtonClick = async () => {
     if (localStorage.getItem('adminAuthenticated') === 'true') {
-      navigate('/admin'); // 认证成功后导航
+      navigate('/admin'); 
     } else {
       const isAuthenticated = await authenticateAdmin(setAdminAuthenticated);
       if (isAuthenticated) {
         localStorage.setItem('adminAuthenticated', 'true');
-        navigate('/admin'); // 认证成功后导航
+        navigate('/admin'); 
       }
     }
   };

@@ -1,6 +1,6 @@
 
 
-// 移除未使用的状态变量
+// Remove unused state variables
 export default function DIDManager() {
   
 }
