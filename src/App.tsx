@@ -4,6 +4,7 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import AdminPanel from './pages/AdminPanel';
 import UserPanel from './pages/UserPanel';
+import VerifyTicket from './pages/VerifyTicket';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/user" element={<UserPanel />} />
+        <Route path="/scanner" element={<VerifyTicket />} />
         <Route path="/admin" element={
           localStorage.getItem('adminAuthenticated') === 'true' 
             ? <AdminPanel /> 

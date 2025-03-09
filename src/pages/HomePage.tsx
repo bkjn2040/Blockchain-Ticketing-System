@@ -40,6 +40,11 @@ export default function HomePage() {
               User Panel
             </Button>
           </Link>
+          <Link to="/scanner">
+            <Button className="w-full" variant="outline">
+              Scanner
+            </Button>
+          </Link>
           <input
             type="password"
             id="privateKeyInput"
