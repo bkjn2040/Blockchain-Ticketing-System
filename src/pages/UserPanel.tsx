@@ -5,6 +5,12 @@ import PurchaseForm from '../components/PurchaseForm';
 import PurchaseList from '../components/PurchaseList';
 import { Purchase } from '../components/types';
 import QRCode from 'qrcode';
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: "http://localhost:8080/",
+  timeout: 1000,
+});
 
 export default function UserPanel() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
@@ -14,7 +20,7 @@ export default function UserPanel() {
   useEffect(() => {
     const savedPurchases = JSON.parse(localStorage.getItem('purchases') || '[]');
     setPurchases(savedPurchases.filter((p: Purchase) => p.purchasedBy === userDID));
-  }, []);
+  }, []); 
 
   // Function to generate DID in the browser using the Web Crypto API
   const generateTicketDID = async (): Promise<{ did: string, qrCodeSvg: string }> => {
@@ -44,18 +50,45 @@ export default function UserPanel() {
   };
 
   const handlePurchase = async (newPurchase: Purchase) => {
-    // Generate a new DID when a purchase is made
-    const { did, qrCodeSvg } = await generateTicketDID();
+    // // Generate a new DID when a purchase is made
+    // const { did, qrCodeSvg } = await generateTicketDID();
 
-    // Log the generated DID to the console
-    console.log("Generated DID for the ticket:", did);
+    // // Log the generated DID to the console
+    // console.log("Generated DID for the ticket:", did);
 
-    // Update the state with the generated QR code SVG
-    setQrCodeSvg(qrCodeSvg);
+    // // Update the state with the generated QR code SVG
+    // setQrCodeSvg(qrCodeSvg);
 
-    const newPurchases = [...purchases, newPurchase];
-    setPurchases(newPurchases);
-    localStorage.setItem('purchases', JSON.stringify(newPurchases));
+    // const newPurchases = [...purchases, newPurchase];
+    // setPurchases(newPurchases);
+    // localStorage.setItem('purchases', JSON.stringify(newPurchases));
+    try {
+      // Generate a new DID when a purchase is made
+      const { did, qrCodeSvg } = await generateTicketDID();
+  
+      // Log the generated DID to the console
+      console.log("Generated DID for the ticket:", did);
+  
+      // Update the state with the generated QR code SVG
+      setQrCodeSvg(qrCodeSvg);
+  
+      // Optionally, attach the DID to your purchase object before sending it to the server
+      const purchaseWithDID = {
+        ...newPurchase,
+        ticketDID: did,
+      };
+  
+      // Update local state and localStorage with the new purchase
+      const newPurchases = [...purchases, purchaseWithDID];
+      setPurchases(newPurchases);
+      localStorage.setItem('purchases', JSON.stringify(newPurchases));
+  
+      // Process the purchase on the server by sending a POST request
+      const response = await instance.post('/event/join', purchaseWithDID);
+      console.log('Purchase processed on server:', response.data);
+    } catch (error) {
+      console.error('Error processing purchase:', error);
+    }
   };
 
   return (
