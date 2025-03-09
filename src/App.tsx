@@ -32,9 +32,9 @@ function App() {
           localStorage.getItem('adminAuthenticated') === 'true' 
             ? <AdminPanel /> 
             : <div className="p-4 text-red-500 text-center">
-                <h2 className="text-2xl font-bold">权限不足</h2>
-                <p className="mt-2">请先以管理员身份登录</p>
-                <Link to="/" className="text-blue-500 mt-4 inline-block">返回首页</Link>
+                <h2 className="text-2xl font-bold">Insufficient permissions</h2>
+                <p className="mt-2">Please login as an administrator first</p>
+                <Link to="/" className="text-blue-500 mt-4 inline-block">Home</Link>
               </div>
           } 
         />
