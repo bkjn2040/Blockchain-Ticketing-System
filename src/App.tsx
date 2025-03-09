@@ -27,6 +27,15 @@ function App() {
               🎫 My Tickets
             </Button>
           </Link>
+          <Button 
+            variant="destructive" 
+            onClick={() => {
+              localStorage.removeItem('adminAuthenticated');
+              window.location.href = '/';
+            }}
+          >
+            Log out
+          </Button>
         </div>
       </nav>
 
