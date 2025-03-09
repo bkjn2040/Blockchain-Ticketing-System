@@ -179,7 +179,7 @@ export default function UserPanel() {
                     <p className="font-medium text-lg">Welcome! To attend the event, please register below</p>
                     <p className="text-sm text-gray-500">This event will start in 5 days</p>
                   </div>
-                  <Button size="lg" onClick={() => handlePurchase({
+                  {/* <Button size="lg" onClick={() => handlePurchase({
                     id: Date.now().toString(),
                     purchasedBy: userDID || 'unknown',
                     eventName: 'Hedera x BSA Hackathon - Workshop #3',
@@ -189,7 +189,7 @@ export default function UserPanel() {
                     status: 'confirmed'
                   })}>
                     Register Now
-                  </Button>
+                  </Button> */}
                 </div>
               </CardContent>
               {/* Event Tickets Section */}

@@ -6,9 +6,9 @@ import { Purchase } from './types';
 export default function PurchaseForm({ onSubmit }: { 
   onSubmit: (purchase: Purchase) => void 
 }) {
-  const [eventName, setEventName] = useState('');
+  const [eventName, setEventName] = useState('Hedera x BSA Hackathon - Workshop #3');
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(10);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,9 +21,9 @@ export default function PurchaseForm({ onSubmit }: {
       purchasedBy: localStorage.getItem('userDID') || '',
       status: 'pending'
     });
-    setEventName('');
+    setEventName('Hedera x BSA Hackathon - Workshop #3');
     setQuantity(1);
-    setPrice(0);
+    setPrice(10);
   };
 
   return (
@@ -47,7 +47,7 @@ export default function PurchaseForm({ onSubmit }: {
         placeholder="Price"
         value={price}
         onChange={(e) => setPrice(Number(e.target.value))}
-        min="0"
+        min="10"
         required
       />
       <Button type="submit" className="w-full">
